@@ -1,0 +1,12 @@
+{
+  "id": "twodsix_mgt2e_weapon_sfx",
+  "title": "Twodsix Weapon SFX (MGT2e)",
+  "description": "User-configurable weapon sound effects for TwoDSix / MGT2e.",
+  "version": "0.1.0",
+  "compatibility": { "minimum": "11", "verified": "13" },
+  "authors": [{ "name": "You" }],
+  "esmodules": ["main.js"],
+  "languages": [
+    { "lang": "en", "name": "English", "path": "lang/en.json" }
+  ]
+}
