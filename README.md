@@ -1,31 +1,21 @@
 # Twodsix Weapon SFX (MGT2e)
 
-Give your Travellers the **bang** they deserve. Map weapons to **Single / Burst / Auto** sounds and the module listens to Twodsix attack chat cards and plays the **right SFX**—no fallback noise, no duplicates, clean volume boosts for quiet files, and a slick, collapsible Groups Manager.
+Give your Travellers the bang they deserve. Map weapons to **Single / Burst / Auto** sounds and the module will listen to Twodsix attack chat cards and play the **right SFX**—no fallback noise, no spammy duplicates, clean volume boosts for quiet files, and a slick, collapsible Groups Manager.
 
 <p align="center">
-  <img alt="hero" src="https://github.com/user-attachments/assets/87e967a7-2a91-481b-bc1f-5503c0ddf18d" width="820">
+  <img src="https://github.com/user-attachments/assets/87e967a7-2a91-481b-bc1f-5503c0ddf18d" alt="Hero" width="820">
 </p>
 
-<p align="center">
-  <a href="https://github.com/BdGM/twodsix_mgt2e_weapon_sfx/releases">
-    <img alt="release" src="https://img.shields.io/github/v/release/BdGM/twodsix_mgt2e_weapon_sfx?style=flat-square&display_name=tag&sort=semver">
-  </a>
-  <img alt="foundry" src="https://img.shields.io/badge/Foundry-v13-orange?style=flat-square">
-  <img alt="license" src="https://img.shields.io/badge/License-MIT-green?style=flat-square">
-  <a href="https://github.com/BdGM/twodsix_mgt2e_weapon_sfx/releases">
-    <img alt="downloads" src="https://img.shields.io/github/downloads/BdGM/twodsix_mgt2e_weapon_sfx/total?style=flat-square&label=downloads">
-  </a>
-  <img alt="requires" src="https://img.shields.io/badge/Requires-Twodsix%20v6.6.2%2B-blue?style=flat-square">
-  <a href="https://github.com/BdGM/twodsix_mgt2e_weapon_sfx/stargazers">
-    <img alt="stars" src="https://img.shields.io/github/stars/BdGM/twodsix_mgt2e_weapon_sfx?style=flat-square">
-  </a>
-  <a href="https://github.com/BdGM/twodsix_mgt2e_weapon_sfx/issues">
-    <img alt="issues" src="https://img.shields.io/github/issues/BdGM/twodsix_mgt2e_weapon_sfx?style=flat-square">
-  </a>
-  <a href="https://github.com/BdGM/twodsix_mgt2e_weapon_sfx/commits/main">
-    <img alt="last-commit" src="https://img.shields.io/github/last-commit/BdGM/twodsix_mgt2e_weapon_sfx?style=flat-square">
-  </a>
-</p>
+[![release](https://img.shields.io/github/v/release/BdrGM/twodsix_mgt2e_weapon_sfx?style=flat-square&display_name=tag&sort=semver)](https://github.com/BdrGM/twodsix_mgt2e_weapon_sfx/releases)
+![Foundry](https://img.shields.io/badge/Foundry-v13-orange?style=flat-square)
+[![License](https://img.shields.io/github/license/BdrGM/twodsix_mgt2e_weapon_sfx?style=flat-square)](./LICENSE)
+[![Downloads](https://img.shields.io/github/downloads/BdrGM/twodsix_mgt2e_weapon_sfx/total?style=flat-square&label=downloads)](https://github.com/BdrGM/twodsix_mgt2e_weapon_sfx/releases)
+![Requires](https://img.shields.io/badge/Requires-Twodsix%20v6.6.2%2B-blue?style=flat-square)
+[![Stars](https://img.shields.io/github/stars/BdrGM/twodsix_mgt2e_weapon_sfx?style=flat-square)](https://github.com/BdrGM/twodsix_mgt2e_weapon_sfx/stargazers)
+[![Issues](https://img.shields.io/github/issues/BdrGM/twodsix_mgt2e_weapon_sfx?style=flat-square)](https://github.com/BdrGM/twodsix_mgt2e_weapon_sfx/issues)
+[![Last commit](https://img.shields.io/github/last-commit/BdrGM/twodsix_mgt2e_weapon_sfx?style=flat-square)](https://github.com/BdrGM/twodsix_mgt2e_weapon_sfx/commits/main)
+
+> **Note:** If your GitHub username is **not** `BdrGM`, replace `BdrGM` with your username in the badge URLs.
 
 ---
 
@@ -36,8 +26,8 @@ Give your Travellers the **bang** they deserve. Map weapons to **Single / Burst 
 - [Installation](#installation)
 - [Quick Start](#quick-start)
 - [Configuration](#configuration)
-  - [Groups & Weapon Matching](#groups--weapon-matching)
-  - [Volumes with Headroom](#volumes-with-headroom)
+  - [Groups \& Weapon Matching](#groups--weapon-matching)
+  - [Volume with Headroom](#volume-with-headroom)
 - [How It Works](#how-it-works)
 - [How to Inspect Flags](#how-to-inspect-flags)
 - [Troubleshooting](#troubleshooting)
@@ -49,63 +39,46 @@ Give your Travellers the **bang** they deserve. Map weapons to **Single / Burst 
 
 ## Features
 
-- **Per-weapon Groups**  
-  Map one or more weapon names to their own **Single**, **Burst**, and **Auto** sound files.
-
-- **Smart mode detection (Twodsix)**  
-  Reads Twodsix flags on attack chat messages:
-  - `single`
-  - `auto-burst` → plays **Burst**
-  - `auto-full` → plays **Auto**
-
-- **No fallbacks by design**  
-  If a slot is empty, nothing plays. (Silence means silence.)
-
-- **Duplicate-playback protection**  
-  Debounces identical events so helper/secondary chat cards don’t retrigger audio.
-
-- **Volumes with real headroom**  
-  UI shows **0–100%**, but behind the scenes a gain stage allows clean boosts for quiet files—without touching Foundry’s global audio.
-
-- **Clean UX**  
-  Collapsible groups (open **collapsed** by default), file pickers on the right, compact toolbar, scrollbar on the manager, and **auto-save on close** (with a Save button if you want it).
-
-- **Supported formats**  
-  `.mp3`, `.ogg`, `.webm` recommended (avoid `.m4a`).
+- **Per‑weapon sounds** for **Single**, **Burst**, and **Auto** fire
+- **No duplicate playback** when chat cards produce multiple events
+- **No global fallbacks** – if a sound isn’t set, **silence** is respected
+- **Collapsible group editor** (add/delete groups, rename, pick files, confirm deletes)
+- **Window resizing + scrolling** for large collections
+- **Saved automatically** on close; optional **Save** button remains
+- **Volume slider with headroom** (UI says 0–100%, internally lets you boost quiet files beyond 100% without affecting other Foundry audio)
 
 ---
 
 ## Requirements
 
-- **Foundry VTT v13**
-- **Twodsix system v6.6.2 or newer** ✅ _(hard requirement)_
+- **Foundry VTT v13+**
+- **Twodsix System v6.6.2+** (required)
+- Audio files in **.mp3** or **.ogg** (Foundry can’t play **.m4a**)
+- (Optional) **Chat Portrait** for pretty chat cards
 
 ---
 
 ## Installation
 
-**Manifest URL** (Foundry → _Add-on Modules_ → _Install Module_):
+**Manifest URL** (Foundry → _Add‑on Modules_ → _Install Module_):
 
+```text
+https://raw.githubusercontent.com/BdrGM/twodsix_mgt2e_weapon_sfx/main/module.json
 ```
-https://raw.githubusercontent.com/BdGM/twodsix_mgt2e_weapon_sfx/main/module.json
-```
 
-Or download the ZIP from **Releases**.
-
-Enable the module (and Twodsix v6.6.2+) in your world.
+Or download a version from **[Releases]** and install manually.
 
 ---
 
 ## Quick Start
 
-1. Open **Game Settings → Module Settings → Twodsix Weapon SFX (MGT2e)**.  
-2. Click **Open Groups Manager**.  
-3. Press **Add** to create a group.  
-4. Set a **Group Name** and list your **Weapon Names** (comma-separated, case-insensitive).  
-5. Choose audio for **Single**, **Burst**, **Auto** and set each **Volume**.  
-6. Press **Save** (or simply **close**; it auto-saves).
-
-> **Tip:** Keep files in your world or a public module folder for fast streaming.
+1. Open **Game Settings → Configure Settings → Twodsix Weapon SFX (MGT2e)**.
+2. Click **Open Groups Manager**.
+3. **Add** a group, give it a **Group Name** (e.g., “Laser Rifles”).
+4. Pick **Single / Burst / Auto** sound files.
+5. In **Weapon Names**, enter comma‑separated weapon names as they appear on attack cards (e.g., `Axe, Test, Laser Rifle`).
+6. Close the window (auto‑saves) or click **Save**.
+7. Make an attack in Twodsix—sound plays based on the chat card’s **flags.twodsix.attackType**.
 
 ---
 
@@ -113,85 +86,84 @@ Enable the module (and Twodsix v6.6.2+) in your world.
 
 ### Groups & Weapon Matching
 
-Each **Group** contains:
+Each group contains:
+- **Group Name** — purely for your organization.
+- **Single / Burst / Auto** — audio file paths for that firing mode.
+- **Weapon Names** — comma‑separated, matched against the Twodsix item name in the chat message.
 
-- **Group Name**  
-- Paths for **Single**, **Burst**, **Auto** (with file picker buttons on the right)  
-- **Weapon Names**: comma-separated list of item names as they appear on the weapon sheet (case-insensitive)
+> The module listens to chat cards and reads `flags.twodsix`:
+> - `attackType`: `"single"`, `"auto-burst"`, `"auto-full"`
+> - `itemUUID` / `itemName`: used to match your group’s weapon names.
 
-When a shot happens, the module finds the **first** group whose list contains the weapon name and plays the sound for the detected mode.  
-If that mode’s path is blank, it plays **nothing**.
+If an attack has no configured sound for its mode, **nothing plays** (by design).
 
-### Volumes with Headroom
+### Volume with Headroom
 
-- The slider shows **0–100%** to match expectations.  
-- Internally, a gain node can push above 100% to **cleanly boost** quiet assets.  
-- These sliders **only** affect this module’s playback—**not** other Foundry audio.
+Each mode has its **own volume slider**. The UI shows **0–100%**, but under the hood it can exceed 100% to help with **quiet recordings**. This **does not** change other Foundry audio or global volume—only the module’s playback gain for that sound.
 
 ---
 
 ## How It Works
 
-1. On **attack** chat cards, read Twodsix flags:  
-   - `attackType: "single" | "auto-burst" | "auto-full"`
-2. Resolve the weapon name (from flags or posted item).
-3. Match the first applicable group by weapon name.
-4. Play the corresponding sound (with per-mode volume), **once**, with duplicate prevention.
+- Hooks **Twodsix** chat messages and inspects `flags.twodsix`.
+- Normalizes Twodsix firing modes to:
+  - `"single"` → **Single**
+  - `"auto-burst"` → **Burst**
+  - `"auto-full"` → **Auto**
+- Looks up the **weapon name** in your groups and chooses the correct sound for the firing mode.
+- Uses a **debounce** so the same card doesn’t trigger overlapping SFX (prevents the “single+burst together” problem).
+- Plays once per attack with your chosen **per‑mode volume**.
 
 ---
 
 ## How to Inspect Flags
 
-If a mode sounds wrong, check the last chat message in the browser console:
+Open **F12 → Console**, click the chat card, and run:
 
 ```js
-const msg = game.messages.contents.at(-1);
-console.log('twodsix flags:', msg?.flags?.twodsix);
+const last = game.messages.contents.at(-1);
+console.log("twodsix flags:", foundry.utils.getProperty(last, "flags.twodsix"));
 ```
 
-You should see `attackType` equal to `"single"`, `"auto-burst"`, or `"auto-full"`.
+Look for `attackType` and the item name/UUID to help you match your groups.
 
 ---
 
 ## Troubleshooting
 
-**Burst/Auto plays the wrong clip**  
-- Verify the **attackType** flag using the snippet above.  
-- Confirm weapon names match your **Weapon Names** list (case-insensitive, comma-separated).  
-- Make sure **Burst** and **Auto** paths are set in the group (no path = silence).
+**It plays the wrong sound**  
+Double‑check `attackType` values (`single`, `auto-burst`, `auto-full`) and ensure the weapon name in your group **matches exactly** the name on the attack card.
 
-**No audio**  
-- Use `.mp3`, `.ogg`, or `.webm`.  
-- Check browser autoplay/audio unlock (click once/play any sound in Foundry).  
-- Ensure **Twodsix v6.6.2+** and this module are enabled.
+**Burst/Auto also plays Single**  
+The module includes a **debounce** to suppress duplicates; if you still hear overlaps, verify there’s only one active copy of the module and you’re not triggering a separate macro that plays audio.
 
-**Volume too low**  
-- Push the slider to 100%. If that’s still quiet, normalize the file (e.g., Audacity).  
-  *(The module already provides clean headroom, but a properly mastered asset always wins.)*
+**The first group didn’t save**  
+This was fixed in the UI—close the window or hit **Save**; values persist in world settings.
+
+**Volume seems capped**  
+The slider reads as **0–100%**, but internally you have **extra headroom** for quiet files. If it’s still too low, normalize your audio in an editor.
+
+**.m4a files don’t play**  
+Convert to **.mp3** or **.ogg**.
 
 ---
 
 ## Credits
 
 - **Author:** BdGM  
-- **Twodsix (MGT2e)** system by the Twodsix team  
-- Thanks to everyone who tested UI tweaks, collapse behaviors, and chat-flag edge cases
+- **System:** [Twodsix (Cepheus/Traveller)](https://github.com/xdy/twodsix-foundryvtt)
+- **Foundry VTT** by Atropos
 
 ---
 
 ## License
 
-**MIT** © BdGM  
-Audio assets are **not** included—use your own licensed sounds.
+**MIT** © BdGM
 
 ---
 
 ## Links
 
-- **Repo:** <https://github.com/BdGM/twodsix_mgt2e_weapon_sfx>  
-- **Manifest:** <https://raw.githubusercontent.com/BdGM/twodsix_mgt2e_weapon_sfx/main/module.json>  
-- **Releases:** <https://github.com/BdGM/twodsix_mgt2e_weapon_sfx/releases>
-
-## Find me on Discord
-
-[![Discord Banner](https://github.com/user-attachments/assets/33a873fb-e502-4d80-a906-354334b5e704)](https://discord.gg/yRFSj7t9hk)
+- **Repo:** <https://github.com/BdrGM/twodsix_mgt2e_weapon_sfx>  
+- **Manifest:** <https://raw.githubusercontent.com/BdrGM/twodsix_mgt2e_weapon_sfx/main/module.json>  
+- **Releases:** <https://github.com/BdrGM/twodsix_mgt2e_weapon_sfx/releases>
