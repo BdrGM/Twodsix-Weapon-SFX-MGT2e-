@@ -3,7 +3,7 @@
 Give your Travellers the bang they deserve. Map weapons to **Single / Burst / Auto** sounds and the module will listen to Twodsix attack chat cards and play the **right SFX**—no fallback noise, no spammy duplicates, clean volume boosts for quiet files, and a slick, collapsible Groups Manager.
 
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/87e967a7-2a91-481b-bc1f-5503c0ddf18d" alt="Hero" width="820">
+  <img src="<img width="1536" height="1024" alt="bing pow" src="https://github.com/user-attachments/assets/18b74c21-c503-44da-8dc6-17853b6c72bb" alt="Hero" width="820">
 </p>
 
 [![release](https://img.shields.io/github/v/release/BdrGM/twodsix_mgt2e_weapon_sfx?style=flat-square&display_name=tag&sort=semver)](https://github.com/BdrGM/twodsix_mgt2e_weapon_sfx/releases)
