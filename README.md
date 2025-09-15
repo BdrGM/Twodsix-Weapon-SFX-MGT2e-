@@ -6,14 +6,15 @@ Give your Travellers the bang they deserve. Map weapons to **Single / Burst / Au
   <img src="https://github.com/user-attachments/assets/18b74c21-c503-44da-8dc6-17853b6c72bb" alt="Hero" width="820">
 </p>
 
-[![release](https://img.shields.io/github/v/release/BdrGM/twodsix_mgt2e_weapon_sfx?style=flat-square&display_name=tag&sort=semver)](https://github.com/BdrGM/twodsix_mgt2e_weapon_sfx/releases)
+[![release](https://img.shields.io/github/v/release/BdrGM/twodsix_mgt2e_weapon_sfx?style=flat-square&sort=semver&display_name=tag)](https://github.com/BdrGM/twodsix_mgt2e_weapon_sfx/releases)
 ![Foundry](https://img.shields.io/badge/Foundry-v13-orange?style=flat-square)
-[![License](https://img.shields.io/github/license/BdrGM/twodsix_mgt2e_weapon_sfx?style=flat-square)](./LICENSE)
-[![Downloads](https://img.shields.io/github/downloads/BdrGM/twodsix_mgt2e_weapon_sfx/total?style=flat-square&label=downloads)](https://github.com/BdrGM/twodsix_mgt2e_weapon_sfx/releases)
-![Requires](https://img.shields.io/badge/Requires-Twodsix%20v6.6.2%2B-blue?style=flat-square)
+![License](https://img.shields.io/badge/License-MIT-green?style=flat-square)
+[![Downloads](https://img.shields.io/github/downloads/BdrGM/twodsix_mgt2e_weapon_sfx/total?style=flat-square)](https://github.com/BdrGM/twodsix_mgt2e_weapon_sfx/releases)
+![Requires](https://img.shields.io/badge/Twodsix-v6.6.2%2B-blue?style=flat-square)
 [![Stars](https://img.shields.io/github/stars/BdrGM/twodsix_mgt2e_weapon_sfx?style=flat-square)](https://github.com/BdrGM/twodsix_mgt2e_weapon_sfx/stargazers)
 [![Issues](https://img.shields.io/github/issues/BdrGM/twodsix_mgt2e_weapon_sfx?style=flat-square)](https://github.com/BdrGM/twodsix_mgt2e_weapon_sfx/issues)
 [![Last commit](https://img.shields.io/github/last-commit/BdrGM/twodsix_mgt2e_weapon_sfx?style=flat-square)](https://github.com/BdrGM/twodsix_mgt2e_weapon_sfx/commits/main)
+
 
 > 
 
