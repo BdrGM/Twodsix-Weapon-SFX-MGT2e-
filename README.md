@@ -54,7 +54,6 @@ Give your Travellers the bang they deserve. Map weapons to **Single / Burst / Au
 - **Foundry VTT v13+**
 - **Twodsix System v6.6.2+** (required)
 - Audio files in **.mp3** or **.ogg** (Foundry can’t play **.m4a**)
-- (Optional) **Chat Portrait** for pretty chat cards
 
 ---
 
