@@ -6,7 +6,7 @@
   "license": "MIT",
   "authors": [
     {
-      "name": "bdrgm",
+      "name": "BdrGM",
       "url": "https://github.com/bdrgm"
     }
   ],
@@ -25,11 +25,11 @@
     ]
   },
 
-  "url": "https://github.com/bdrgm/twodsix_mgt2e_weapon_sfx",
-  "readme": "https://raw.githubusercontent.com/bdrgm/twodsix_mgt2e_weapon_sfx/main/README.md",
-  "manifest": "https://raw.githubusercontent.com/bdrgm/twodsix_mgt2e_weapon_sfx/main/module.json",
-  "download": "https://github.com/bdrgm/twodsix_mgt2e_weapon_sfx/releases/latest/download/module.zip",
-  "bugs": "https://github.com/bdrgm/twodsix_mgt2e_weapon_sfx/issues",
+  "url": "https://github.com/BdrGM/twodsix_mgt2e_weapon_sfx",
+  "readme": "https://raw.githubusercontent.com/BdrGM/twodsix_mgt2e_weapon_sfx/main/README.md",
+  "manifest": "https://raw.githubusercontent.com/BdrGM/twodsix_mgt2e_weapon_sfx/main/module.json",
+  "download": "https://github.com/BdrGM/twodsix_mgt2e_weapon_sfx/releases/latest/download/module.zip",
+  "bugs": "https://github.com/BdrGM/twodsix_mgt2e_weapon_sfx/issues",
 
   "esmodules": ["main.js"],
   "languages": [
@@ -39,3 +39,4 @@
   "dependencies": [],
   "flags": {}
 }
+
