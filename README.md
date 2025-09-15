@@ -46,7 +46,7 @@ Give your Travellers the bang they deserve. Map weapons to **Single / Burst / Au
 - **Window resizing + scrolling** for large collections
 - **Saved automatically** on close; optional **Save** button remains
 - **Volume slider with headroom** (UI says 0–100%, internally lets you boost quiet files beyond 100% without affecting other Foundry audio)
-- **Even works for ship weapons
+- **Even works for ship weapons**
 ---
 
 ## Requirements
