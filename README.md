@@ -15,7 +15,7 @@ Give your Travellers the bang they deserve. Map weapons to **Single / Burst / Au
 [![Issues](https://img.shields.io/github/issues/BdrGM/twodsix_mgt2e_weapon_sfx?style=flat-square)](https://github.com/BdrGM/twodsix_mgt2e_weapon_sfx/issues)
 [![Last commit](https://img.shields.io/github/last-commit/BdrGM/twodsix_mgt2e_weapon_sfx?style=flat-square)](https://github.com/BdrGM/twodsix_mgt2e_weapon_sfx/commits/main)
 
-> **Note:** If your GitHub username is **not** `BdrGM`, replace `BdrGM` with your username in the badge URLs.
+> 
 
 ---
 
