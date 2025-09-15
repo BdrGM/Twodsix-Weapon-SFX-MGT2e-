@@ -1,12 +1,41 @@
 {
   "id": "twodsix_mgt2e_weapon_sfx",
   "title": "Twodsix Weapon SFX (MGT2e)",
-  "description": "User-configurable weapon sound effects for TwoDSix / MGT2e.",
+  "description": "User-configurable weapon sound effects for TwoDSix / MGT2e. Map weapons to Single/Burst/Auto and play the correct SFX from chat flags.",
   "version": "0.1.0",
-  "compatibility": { "minimum": "11", "verified": "13" },
-  "authors": [{ "name": "You" }],
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "bdrgm",
+      "url": "https://github.com/bdrgm"
+    }
+  ],
+  "compatibility": {
+    "minimum": "11",
+    "verified": "13"
+  },
+
+  "relationships": {
+    "systems": [
+      {
+        "id": "twodsix",
+        "type": "system",
+        "compatibility": { "minimum": "6.6.2" }
+      }
+    ]
+  },
+
+  "url": "https://github.com/bdrgm/twodsix_mgt2e_weapon_sfx",
+  "readme": "https://raw.githubusercontent.com/bdrgm/twodsix_mgt2e_weapon_sfx/main/README.md",
+  "manifest": "https://raw.githubusercontent.com/bdrgm/twodsix_mgt2e_weapon_sfx/main/module.json",
+  "download": "https://github.com/bdrgm/twodsix_mgt2e_weapon_sfx/releases/latest/download/module.zip",
+  "bugs": "https://github.com/bdrgm/twodsix_mgt2e_weapon_sfx/issues",
+
   "esmodules": ["main.js"],
   "languages": [
     { "lang": "en", "name": "English", "path": "lang/en.json" }
-  ]
+  ],
+  "packs": [],
+  "dependencies": [],
+  "flags": {}
 }
