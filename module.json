@@ -28,7 +28,7 @@
   "url": "https://github.com/BdrGM/twodsix_mgt2e_weapon_sfx",
   "readme": "https://raw.githubusercontent.com/BdrGM/twodsix_mgt2e_weapon_sfx/main/README.md",
   "manifest": "https://raw.githubusercontent.com/BdrGM/twodsix_mgt2e_weapon_sfx/main/module.json",
-  "download": "https://github.com/BdrGM/twodsix_mgt2e_weapon_sfx/releases/latest/download/module.zip",
+  "download": "https://github.com/BdrGM/twodsix_mgt2e_weapon_sfx/releases/download/v0.1.0/twodsix_mgt2e_weapon_sfx_v0.1.0.zip",
   "bugs": "https://github.com/BdrGM/twodsix_mgt2e_weapon_sfx/issues",
 
   "esmodules": ["main.js"],
@@ -39,4 +39,5 @@
   "dependencies": [],
   "flags": {}
 }
+
 
