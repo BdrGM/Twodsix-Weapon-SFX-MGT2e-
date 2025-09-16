@@ -22,6 +22,9 @@ function safeMerge(target, src) {
 }
 function dup(o){ return foundry?.utils?.duplicate ? foundry.utils.duplicate(o) : JSON.parse(JSON.stringify(o)); }
 
+/* ---------- AudioHelper compat (removes v12+ deprecation) ---------- */
+const AH = (foundry?.audio?.AudioHelper ?? globalThis.AudioHelper);
+
 /* ---------- constants ---------- */
 const VOL_UI_MAX = 4; // allow up to 400% behind the scenes, UI still shows 0–100%
 
@@ -150,7 +153,12 @@ class SFXGroupsConfig extends FormApplication {
     body.append(this._pathWithVolumeRow("Auto",   g.auto   ?? "", g.autoVol,   v=> g.auto   = v, v=> g.autoVol   = v, `auto-${idx}`,   "auto",   "autoVol"));
     body.append(this._textarea("Weapon Names (comma separated)", g.weapons ?? "", v=> g.weapons = v, `weapons-${idx}`, "weapons"));
 
-    const del = this._btn(`<i class="fas fa-trash"></i> Delete`, "Delete this group", async ()=>{
+    const del = document.createElement("button");
+    del.type = "button";
+    del.className = `btn ${MOD_ID}-delete-btn`;
+    del.innerHTML = `<i class="fas fa-trash"></i> Delete`;
+    del.title = "Delete this group";
+    del.addEventListener("click", async ()=>{
       const ok = await Dialog.confirm({ title:"Delete Group", content:`<p>Delete “${g.name || "New Group"}”?</p>` });
       if (!ok) return;
 
@@ -163,7 +171,6 @@ class SFXGroupsConfig extends FormApplication {
 
       this.render(true);
     });
-    del.classList.add(`${MOD_ID}-delete-btn`);
     body.append(del);
 
     sec.append(body);
@@ -186,7 +193,8 @@ class SFXGroupsConfig extends FormApplication {
     const l = document.createElement("label"); l.textContent = label;
 
     const i = document.createElement("input");
-    i.type="text"; i.id=`${idPrefix}`; i.dataset.bind=bindPath; i.value=value||""; i.placeholder="path/to/file.ext";
+    i.type="text"; i.id=`${idPrefix}`; i.dataset.bind=bindPath; i.value=value||""; 
+    i.placeholder="path/to/file.ext | folder/ | random(a|b|c) | folder/pattern*.wav";
     i.addEventListener("input", ev=>setPath(ev.target.value));
 
     const pick = this._btn(`<i class="fas fa-folder-open"></i>`, "Pick file", ()=>this._pickFile(i), ["icon"]);
@@ -231,9 +239,9 @@ class SFXGroupsConfig extends FormApplication {
 
   async _pickFile(inputEl){
     try{
-      const FP = foundry?.applications?.apps?.FilePicker?.implementation ?? globalThis.FilePicker;
-      if (!FP) throw new Error("FilePicker not available");
-      const fp = new FP({ type:"audio", current: inputEl.value || "sounds", callback:(p)=>{ inputEl.value=p; inputEl.dispatchEvent(new Event("input")); } });
+      const FPImpl = foundry?.applications?.apps?.FilePicker?.implementation ?? globalThis.FilePicker;
+      if (!FPImpl) throw new Error("FilePicker not available");
+      const fp = new FPImpl({ type:"audio", current: inputEl.value || "sounds", callback:(p)=>{ inputEl.value=p; inputEl.dispatchEvent(new Event("input")); } });
       fp.render(true);
     }catch(e){ ui.notifications?.error("File Picker not available in this Foundry version."); warn("FilePicker error:", e); }
   }
@@ -342,6 +350,8 @@ function buildMatcherCache(){
       }
     };
   }).filter(e=>e.names.length);
+  // refresh directory cache when groups change
+  _dirCache.clear?.();
   log("matcher cache built", _matcher);
 }
 function escapeRegExp(s){ return s.replace(/[.*+?^${}()|[\]\\]/g,"\\$&"); }
@@ -355,10 +365,10 @@ const _bufferCache = new Map();
 async function playSound(path, volume=.8){
   if (!path) return;
   try{
-    // Up to 100%—use Foundry/HTML audio as before
+    // Up to 100%—use Foundry/HTML audio as before (via namespaced AH)
     if (volume <= 1) {
       const data={src:path,volume,autoplay:true,loop:false};
-      if (globalThis.AudioHelper?.play) return AudioHelper.play(data);
+      if (AH?.play) return AH.play(data, true);
       const a=new Audio(path); a.volume=volume; return a.play().catch(()=>{});
     }
 
@@ -367,7 +377,7 @@ async function playSound(path, volume=.8){
     if (!_audioCtx) {
       // fallback if Web Audio unavailable: cap at 1
       const data={src:path,volume:1,autoplay:true,loop:false};
-      if (globalThis.AudioHelper?.play) return AudioHelper.play(data);
+      if (AH?.play) return AH.play(data, true);
       const a=new Audio(path); a.volume=1; return a.play().catch(()=>{});
     }
 
@@ -387,6 +397,82 @@ async function playSound(path, volume=.8){
     src.connect(gain).connect(_audioCtx.destination);
     src.start(0);
   }catch(e){ warn("Audio play failed",e); }
+}
+
+/* ---------- wildcard / folder / random support ---------- */
+const AUDIO_EXT = [".mp3",".ogg",".wav",".webm",".m4a",".flac"];
+const _dirCache = new Map();
+
+async function _browseDir(basePath) {
+  const target = basePath.replace(/\/+$/,"") + "/";
+  // Foundry v10–v13: FilePicker.browse(source,current)
+  const FPClass = foundry?.applications?.apps?.FilePicker ?? globalThis.FilePicker;
+  const browse = FPClass?.browse?.bind(FPClass) || FPClass?.implementation?.browse?.bind(FPClass?.implementation);
+  if (!browse) throw new Error("FilePicker.browse unavailable in this version");
+  const res = await browse("data", target);
+  return (res?.files ?? []).filter(f => AUDIO_EXT.some(ext => f.toLowerCase().endsWith(ext)));
+}
+
+async function pickFromFolder(folderPath) {
+  const key = folderPath.replace(/\/+$/,"") + "/";
+  if (!_dirCache.has(key)) _dirCache.set(key, await _browseDir(key));
+  const files = _dirCache.get(key);
+  if (!files?.length) throw new Error(`No audio files found in: ${folderPath}`);
+  return files[Math.floor(Math.random() * files.length)];
+}
+
+/* ---- GLOB support (like Foundry image wildcards) ---- */
+function _basename(p){ const i = p.lastIndexOf("/"); return i>=0 ? p.slice(i+1) : p; }
+function _dirname(p){ const i = p.lastIndexOf("/"); return i>=0 ? p.slice(0, i+1) : ""; }
+/** Convert a simple glob (supports * and ?) to a RegExp matching a single path segment */
+function _globToRegExp(glob) {
+  const esc = glob
+    .replace(/[.+^${}()|\\]/g, "\\$&")  // escape regex metachars
+    .replace(/\*/g, "[^/]*")           // * -> any chars except slash
+    .replace(/\?/g, "[^/]");           // ? -> single char except slash
+  return new RegExp(`^${esc}$`, "i");
+}
+async function pickFromGlob(fullPath) {
+  const dir = _dirname(fullPath);
+  const pat = _basename(fullPath);
+  if (!dir) throw new Error("Wildcard must include a folder, e.g. sounds/weapons/pistol/pistol*.wav");
+  const rx = _globToRegExp(pat);
+  const files = await _browseDir(dir);
+  const matches = files.filter(f => rx.test(_basename(f)));
+  if (!matches.length) throw new Error(`No files match '${pat}' in ${dir}`);
+  return matches[Math.floor(Math.random() * matches.length)];
+}
+
+/** Accepts:
+ *  - exact file: "sounds/pistol/shot_01.wav"
+ *  - folder:     "sounds/pistol/"  or "sounds/pistol/*"  -> pick random
+ *  - random():   "random(a.wav|b.wav|c.wav)" or comma "random(a.wav,b.wav)"
+ *  - glob:       "folder/prefix*.wav" or "folder/shot_??.wav"
+ */
+async function resolveAudioPath(p) {
+  if (!p) return p;
+
+  // random(a|b|c)
+  const r = p.match(/^random\((.+)\)$/i);
+  if (r) {
+    const items = r[1].split(/[|,]/).map(s => s.trim()).filter(Boolean);
+    return items[Math.floor(Math.random() * items.length)] || null;
+  }
+
+  // folder or /* suffix
+  if (p.endsWith("/*") || /\/$/.test(p)) {
+    const folder = p.replace(/\*+$/,"");
+    try { return await pickFromFolder(folder); }
+    catch(e){ warn(e?.message || e); return null; }
+  }
+
+  // glob patterns with * or ?
+  if (/[*?]/.test(p)) {
+    try { return await pickFromGlob(p); }
+    catch(e){ warn(e?.message || e); return null; }
+  }
+
+  return p; // exact file
 }
 
 /** Prefer explicit Twodsix flags for mode; then parse visible text like “Firing Mode (Auto)”. */
@@ -477,7 +563,10 @@ async function maybePlayWeaponSFX(msg){
     if (!passCooldown(key, 450)) return;
 
     const spec = entry.paths[mode] || entry.paths.single;
-    if (spec?.p) await playSound(spec.p, spec.v);
+    if (spec?.p) {
+      const resolved = await resolveAudioPath(spec.p);
+      if (resolved) await playSound(resolved, spec.v);
+    }
   }catch(e){ warn("maybePlayWeaponSFX error", e); }
 }
 /* ========================================================== */
