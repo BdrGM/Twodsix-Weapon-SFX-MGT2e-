@@ -2,7 +2,14 @@
 
 All notable changes to the **Twodsix Weapon SFX** module are documented here.
 
-## v0.1.1 2025-09-16
+## v0.1.2 — 2025-09-16
+
+### Changed
+- Removed wildcard / glob / folder path support in sound fields because these did not reliably play for non-GM players. Use exact file paths instead. Mappings that still contain wildcards will be ignored and a warning is shown.
+- Updated the Groups UI placeholders to remove any suggestion of wildcard usage.
+
+
+## v0.1.1 - 2025-09-16
 
 ### Added
 - **Wildcard / folder support for sound paths**
