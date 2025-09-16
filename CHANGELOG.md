@@ -2,7 +2,7 @@
 
 All notable changes to the **Twodsix Weapon SFX** module are documented here.
 
-## 2025-09-16
+## v0.1.1 2025-09-16
 
 ### Added
 - **Wildcard / folder support for sound paths**
