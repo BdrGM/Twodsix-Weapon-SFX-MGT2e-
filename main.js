@@ -1,4 +1,4 @@
-/* ================= Twodsix Weapon SFX — main.js ================= */
+/* ================= Twodsix Weapon SFX — main.js (no-wildcards) ================= */
 const MOD_ID = "twodsix_mgt2e_weapon_sfx";
 
 /* ---------- helpers ---------- */
@@ -193,8 +193,8 @@ class SFXGroupsConfig extends FormApplication {
     const l = document.createElement("label"); l.textContent = label;
 
     const i = document.createElement("input");
-    i.type="text"; i.id=`${idPrefix}`; i.dataset.bind=bindPath; i.value=value||""; 
-    i.placeholder="path/to/file.ext | folder/ | random(a|b|c) | folder/pattern*.wav";
+    i.type="text"; i.id=`${idPrefix}`; i.dataset.bind=bindPath; i.value=value||"";
+    i.placeholder="path/to/file.ext"; // <— placeholder no longer suggests wildcards or random()
     i.addEventListener("input", ev=>setPath(ev.target.value));
 
     const pick = this._btn(`<i class="fas fa-folder-open"></i>`, "Pick file", ()=>this._pickFile(i), ["icon"]);
@@ -350,8 +350,6 @@ function buildMatcherCache(){
       }
     };
   }).filter(e=>e.names.length);
-  // refresh directory cache when groups change
-  _dirCache.clear?.();
   log("matcher cache built", _matcher);
 }
 function escapeRegExp(s){ return s.replace(/[.*+?^${}()|[\]\\]/g,"\\$&"); }
@@ -399,80 +397,23 @@ async function playSound(path, volume=.8){
   }catch(e){ warn("Audio play failed",e); }
 }
 
-/* ---------- wildcard / folder / random support ---------- */
-const AUDIO_EXT = [".mp3",".ogg",".wav",".webm",".m4a",".flac"];
-const _dirCache = new Map();
-
-async function _browseDir(basePath) {
-  const target = basePath.replace(/\/+$/,"") + "/";
-  // Foundry v10–v13: FilePicker.browse(source,current)
-  const FPClass = foundry?.applications?.apps?.FilePicker ?? globalThis.FilePicker;
-  const browse = FPClass?.browse?.bind(FPClass) || FPClass?.implementation?.browse?.bind(FPClass?.implementation);
-  if (!browse) throw new Error("FilePicker.browse unavailable in this version");
-  const res = await browse("data", target);
-  return (res?.files ?? []).filter(f => AUDIO_EXT.some(ext => f.toLowerCase().endsWith(ext)));
-}
-
-async function pickFromFolder(folderPath) {
-  const key = folderPath.replace(/\/+$/,"") + "/";
-  if (!_dirCache.has(key)) _dirCache.set(key, await _browseDir(key));
-  const files = _dirCache.get(key);
-  if (!files?.length) throw new Error(`No audio files found in: ${folderPath}`);
-  return files[Math.floor(Math.random() * files.length)];
-}
-
-/* ---- GLOB support (like Foundry image wildcards) ---- */
-function _basename(p){ const i = p.lastIndexOf("/"); return i>=0 ? p.slice(i+1) : p; }
-function _dirname(p){ const i = p.lastIndexOf("/"); return i>=0 ? p.slice(0, i+1) : ""; }
-/** Convert a simple glob (supports * and ?) to a RegExp matching a single path segment */
-function _globToRegExp(glob) {
-  const esc = glob
-    .replace(/[.+^${}()|\\]/g, "\\$&")  // escape regex metachars
-    .replace(/\*/g, "[^/]*")           // * -> any chars except slash
-    .replace(/\?/g, "[^/]");           // ? -> single char except slash
-  return new RegExp(`^${esc}$`, "i");
-}
-async function pickFromGlob(fullPath) {
-  const dir = _dirname(fullPath);
-  const pat = _basename(fullPath);
-  if (!dir) throw new Error("Wildcard must include a folder, e.g. sounds/weapons/pistol/pistol*.wav");
-  const rx = _globToRegExp(pat);
-  const files = await _browseDir(dir);
-  const matches = files.filter(f => rx.test(_basename(f)));
-  if (!matches.length) throw new Error(`No files match '${pat}' in ${dir}`);
-  return matches[Math.floor(Math.random() * matches.length)];
-}
-
+/* ---------- path resolver (no wildcards) ---------- */
 /** Accepts:
  *  - exact file: "sounds/pistol/shot_01.wav"
- *  - folder:     "sounds/pistol/"  or "sounds/pistol/*"  -> pick random
- *  - random():   "random(a.wav|b.wav|c.wav)" or comma "random(a.wav,b.wav)"
- *  - glob:       "folder/prefix*.wav" or "folder/shot_??.wav"
+ *  (Wildcards like "*", "?", trailing "/" or "/*" are **not supported**.)
+ *  (Optional: you can still implement `random(...)` if you decide to keep it.)
  */
 async function resolveAudioPath(p) {
   if (!p) return p;
 
-  // random(a|b|c)
-  const r = p.match(/^random\((.+)\)$/i);
-  if (r) {
-    const items = r[1].split(/[|,]/).map(s => s.trim()).filter(Boolean);
-    return items[Math.floor(Math.random() * items.length)] || null;
+  // Explicitly refuse wildcards
+  if (/[*?]/.test(p) || /\/$/.test(p) || /\/\*$/.test(p)) {
+    warn(`Wildcard paths are disabled. Offending value: ${p}`);
+    ui?.notifications?.warn?.("Weapon SFX: wildcard paths are disabled. Use exact files.");
+    return null;
   }
 
-  // folder or /* suffix
-  if (p.endsWith("/*") || /\/$/.test(p)) {
-    const folder = p.replace(/\*+$/,"");
-    try { return await pickFromFolder(folder); }
-    catch(e){ warn(e?.message || e); return null; }
-  }
-
-  // glob patterns with * or ?
-  if (/[*?]/.test(p)) {
-    try { return await pickFromGlob(p); }
-    catch(e){ warn(e?.message || e); return null; }
-  }
-
-  return p; // exact file
+  return p; // exact file only
 }
 
 /** Prefer explicit Twodsix flags for mode; then parse visible text like “Firing Mode (Auto)”. */
