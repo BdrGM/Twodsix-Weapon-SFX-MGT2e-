@@ -2,6 +2,13 @@
 
 All notable changes to the **Twodsix Weapon SFX** module are documented here.
 
+
+## v0.1.3 - 2025-10-22
+
+### Fixed
+- Firing a ship weapon would only play a sound when it missed, now it plays if it missed or hits.
+
+
 ## v0.1.2 — 2025-09-16
 
 ### Changed
