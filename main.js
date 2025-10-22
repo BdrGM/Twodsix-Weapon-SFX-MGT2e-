@@ -482,7 +482,10 @@ async function maybePlayWeaponSFX(msg){
 
     // Only react to real attack messages to avoid double-fires (e.g., damage/other helper chat)
     const f = msg?.flags?.twodsix ?? {};
-    if (f.rollClass && String(f.rollClass).toLowerCase() !== "attack") return;
+const cls = String(msg.rollClass ?? f.rollClass ?? "").toLowerCase();
+// Only bail if we *know* it's not an attack/weapon message
+if (cls && !/(attack|weapon|shipweapon|ship-?attack|starship-?attack)/.test(cls)) return;
+
 
     const text = `${stripHTML(msg.flavor||"")} ${stripHTML(msg.content||"")}`;
     const mode = detectMode(msg);
@@ -500,7 +503,8 @@ async function maybePlayWeaponSFX(msg){
     if (!entry) return;
 
     // Debounce per actor/weapon/mode so we don't play twice for the same shot
-    const key = `${f.actorUUID||""}|${f.itemUUID||weaponName||""}|${mode}`;
+    const key = `${(f.actorUUID || msg.speaker?.actor || "")}|${(f.itemUUID || f.itemUuid || weaponName || "")}|${mode}`;
+
     if (!passCooldown(key, 450)) return;
 
     const spec = entry.paths[mode] || entry.paths.single;
