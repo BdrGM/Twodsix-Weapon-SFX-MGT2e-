@@ -2,7 +2,7 @@
   "id": "twodsix_mgt2e_weapon_sfx",
   "title": "Twodsix Weapon SFX (MGT2e)",
   "description": "User-configurable weapon sound effects for TwoDSix / MGT2e. Map weapons to Single/Burst/Auto and play the correct SFX from chat flags.",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "license": "MIT",
   "authors": [
     {
@@ -39,6 +39,7 @@
   "dependencies": [],
   "flags": {}
 }
+
 
 
 
